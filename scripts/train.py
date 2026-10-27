@@ -2,6 +2,8 @@ from pathlib import Path
 
 import joblib
 from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 
 
 def train_model(X_train, y_train, params: dict):
@@ -9,7 +11,11 @@ def train_model(X_train, y_train, params: dict):
     random_state = params.get("random_state", 42)
 
     if model_type == "logistic_regression":
-        model = LogisticRegression(max_iter=params.get("max_iter", 500), random_state=random_state)
+        # Income and loan amounts are in dollars, so scale before the regression or it will not converge
+        model = make_pipeline(
+            StandardScaler(),
+            LogisticRegression(max_iter=params.get("max_iter", 500), random_state=random_state),
+        )
     else:
         raise ValueError(f"Unsupported model type: {model_type}")
 

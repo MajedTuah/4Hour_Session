@@ -1,5 +1,5 @@
 data:
-  target_column: churn
+  target_column: defaulted_in_next_30_days
   test_size: 0.2
   random_state: 42
   path: data/production_training_sample.csv
