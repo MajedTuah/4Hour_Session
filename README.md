@@ -94,6 +94,28 @@ setup/            setup scripts and check_env.py
 ```
 Generated while you work (ignored by Git): `artifacts/`, `mlruns/`, `reports/`.
 
+## The training data
+`data/production_training_sample.csv` is used by the training scripts in Module 2. It holds 1,000 approved loans, one per row,
+and keeps only the columns known when the loan was approved (no IDs, dates or anything recorded after the outcome).
+
+| Column | What it means | Typical values |
+|---|---|---|
+| `age` | Applicant's age in years | 21–65 |
+| `annual_income` | Yearly income in $ (about 4% blank) | median $48,600 |
+| `employment_years` | Years in the current job | median 6 |
+| `credit_score` | Credit bureau score (about 4% blank) | 541–801, median 680 |
+| `credit_utilization` | Share of the credit limit in use (0.30 = 30%) | 0.01–0.78 |
+| `missed_payments_12m` | Payments missed in the last 12 months | 0–3 |
+| `existing_loans` | Other loans the applicant already has | 0–5 |
+| `loan_amount` | Size of the loan in $ | depends on loan type (mortgages largest) |
+| `loan_type` | Kind of loan | personal, auto, mortgage, student |
+| `region` | Branch region | North, South, East, West |
+| `defaulted_in_next_30_days` | **Target:** 1 if the borrower defaulted | 1 for about 16% of loans |
+
+Default risk goes up with a low credit score, high credit utilisation, missed payments, more existing loans
+and a loan that is large compared with income. It goes down with longer employment. Personal loans default most often.
+If the file is deleted, `scripts/data_loader.py` rebuilds the same data from a fixed seed.
+
 ## Commands you will run
 Always from the repo root, with the environment active.
 
